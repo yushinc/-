@@ -5,13 +5,14 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name="user")
 @Getter
 @Setter
 @ToString
-public class UserEntity {
+public class User {
     @Id
     @Column(name="user_id")
     @GeneratedValue(strategy = GenerationType.AUTO)

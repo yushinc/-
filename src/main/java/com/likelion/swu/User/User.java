@@ -1,5 +1,9 @@
 package com.likelion.swu.User;
+import javax.persistence.Entity;
 
+@Entity
+public class User {
+=======
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
@@ -24,4 +28,5 @@ public class User {
     private String major;
     @Enumerated(EnumType.STRING)
     private Role role;
+
 }

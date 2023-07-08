@@ -1,9 +1,5 @@
 package com.likelion.swu.User;
 import javax.persistence.Entity;
-
-@Entity
-public class User {
-=======
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;

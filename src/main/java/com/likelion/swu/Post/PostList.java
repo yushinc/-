@@ -1,5 +1,4 @@
 package com.likelion.swu.Post;
-import com.likelion.swu.User.User;
 import lombok.Getter;
 import lombok.Setter;
 

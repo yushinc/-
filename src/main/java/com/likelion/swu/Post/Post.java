@@ -1,5 +1,5 @@
 package com.likelion.swu.Post;
-import com.likelion.swu.User.User;
+import com.likelion.swu.User.Account;
 import lombok.Getter;
 import lombok.Setter;
 import javax.validation.constraints.NotNull;
@@ -25,7 +25,7 @@ public class Post {
 
 //    @ManyToOne(fetch=FetchType.LAZY)
 //    @JoinColumn(name="user_id")
-//    private User user; //사용자랑 외래키 설정 해줘야함
+//    private Account user; //사용자랑 외래키 설정 해줘야함
 
     private LocalDateTime date;
 

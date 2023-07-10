@@ -1,13 +1,10 @@
 package com.likelion.swu.Post;
 
-import com.likelion.swu.User.User;
-import com.likelion.swu.User.UserRepository;
-import com.likelion.swu.config.ModelMapperConfig;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import javax.persistence.EntityExistsException;
+
 import javax.persistence.EntityNotFoundException;
 
 import java.time.LocalDateTime;
@@ -20,7 +17,6 @@ import java.util.stream.Collectors;
 public class PostService {
     private final ModelMapper mapper;
     private final PostRepository postRepository;
-    private final UserRepository userRepository;
 
     //게시글 생성
 //    public Post createPost(PostFromDto postFromDto,Building building, Long id) throws Exception {
@@ -92,6 +88,5 @@ public class PostService {
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(post, PostListDto.class);
     }
-
 
 }

@@ -1,14 +1,17 @@
 package com.likelion.swu.Post;
 
+import com.likelion.swu.User.Account;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import javax.persistence.EntityNotFoundException;
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -32,19 +35,20 @@ public class PostController {
 //            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
 //        }
 //    }
-@PostMapping(value = "/posts")
-public ResponseEntity<PostReturnDto> createPost(@RequestBody @Valid PostFromDto postFromDto,
-                                                @RequestParam("building") Building building) {
-    try {
-        Post post = postService.createPost(postFromDto,building);
-        // 게시글 작성 성공 시, 201 Created 상태코드와 생성된 게시글 정보 반환
-        PostReturnDto postReturnDto = convertToDto(post); //생성한 객체 정보 다시 returndto로 넘김, 조회를 위해
-        return ResponseEntity.status(HttpStatus.CREATED).body(postReturnDto);
-    } catch (Exception e) {
-        // 게시글 작성 실패 시, 500 Internal Server Error 반환
-        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+    @PostMapping(value = "/posts/{building}")
+    public ResponseEntity<PostReturnDto> createPost(@RequestBody @Valid PostFromDto postFromDto,
+                                                    @PathVariable("building") Building building, Principal principal) {
+        try {
+            System.out.println("user: "+principal.getName());
+            Post post = postService.createPost(postFromDto,building);
+            // 게시글 작성 성공 시, 201 Created 상태코드와 생성된 게시글 정보 반환
+            PostReturnDto postReturnDto = convertToDto(post); //생성한 객체 정보 다시 returndto로 넘김, 조회를 위해
+            return ResponseEntity.status(HttpStatus.CREATED).body(postReturnDto);
+        } catch (Exception e) {
+            // 게시글 작성 실패 시, 500 Internal Server Error 반환
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
+        }
     }
-}
 
     //게시글 수정
     @PutMapping(value = "/posts/edit/{postId}")
@@ -72,6 +76,7 @@ public ResponseEntity<PostReturnDto> createPost(@RequestBody @Valid PostFromDto 
     //게시글 목록 조회
     @GetMapping("/posts")
     public ResponseEntity<List<PostListDto>> getAllPosts(@RequestParam(value = "building", required = false) Building building) {
+//        System.out.println(principal.getName());
         List<PostListDto> filteredPosts = postService.getAllPosts(building);
         return ResponseEntity.ok(filteredPosts);
     }
@@ -87,4 +92,9 @@ public ResponseEntity<PostReturnDto> createPost(@RequestBody @Valid PostFromDto 
         ModelMapper modelMapper = new ModelMapper();
         return modelMapper.map(post, PostReturnDto.class);
     }
+//
+//    @PostMapping("/post")
+//    public Long save(@RequestBody PostSaveRequestDto requestDto, @AuthenticationPrincipal Account user) {
+//        return postService.save(requestDto);
+//    }
 }
